@@ -616,11 +616,11 @@ void main()
 		}
 
 		//
-		// Query command line paramters.
+		// Query command line parameters.
 		//
 		ParamLen = 0;
 		RtlSecureZeroMemory(cmdLineParam, sizeof(cmdLineParam));
-		GetCommandLineParam(GetCommandLineW(), 1, cmdLineParam, MAX_PATH, &ParamLen);
+		GetCommandLineParam(GetCommandLine(), 1, cmdLineParam, MAX_PATH, &ParamLen);
 		if (_strcmpi(cmdLineParam, TEXT("-e")) == 0) {
 			ShowServiceMessage("DSE will be (re)enabled");
 			bDisable = FALSE;

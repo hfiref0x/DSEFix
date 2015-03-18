@@ -2,7 +2,7 @@
 *
 *  (C) COPYRIGHT AUTHORS, 2014 - 2015
 *
-*  TITLE:       SUP.H
+*  TITLE:       GLOBAL.H
 *
 *  VERSION:     1.10
 *
@@ -16,8 +16,10 @@
 * PARTICULAR PURPOSE.
 *
 *******************************************************************************/
+//disable nonmeaningful warnings.
 #pragma warning(disable: 4005) // macro redefinition
 #pragma warning(disable: 4201) // nonstandard extension used : nameless struct/union
+#pragma warning(disable: 4054) // %s : from function pointer %s to data pointer %s
 #pragma warning(disable: 6102) // Using %s from failed function call at line %u
 
 #include <Windows.h>

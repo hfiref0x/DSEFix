@@ -149,7 +149,7 @@ BOOL supBackupVBoxDrv(
 }
 
 /*
-* supGetCommandLineParamW
+* supGetCommandLineParamA
 *
 * Purpose:
 *
@@ -157,7 +157,7 @@ BOOL supBackupVBoxDrv(
 *
 * Return value: TRUE on success, FALSE otherwise
 *
-* Remark: UNICODE variant
+* Remark: ANSI variant
 *
 */
 BOOL supGetCommandLineParamA(

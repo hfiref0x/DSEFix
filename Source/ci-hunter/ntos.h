@@ -6,7 +6,7 @@
 *
 *  VERSION:     1.11
 *
-*  DATE:        10 Mar 2015
+*  DATE:        16 Mar 2015
 *
 *  Common header file for the ntos API functions and definitions.
 *
@@ -715,7 +715,7 @@ __inline struct _PEB * NtCurrentPeb() { return NtCurrentTeb()->ProcessEnvironmen
 ** Runtime Library API START
 */
 
-NTSTATUS RtlGetVersion(
+NTSTATUS NTAPI RtlGetVersion(
 	_Inout_	PRTL_OSVERSIONINFOW lpVersionInformation
 	);
 
