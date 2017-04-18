@@ -1,11 +1,8 @@
 #include <stdint.h>
 
-#pragma pack(8) 
-
 typedef void* RTR0PTR;
 
-typedef struct _SUPREQHDR
-{
+typedef struct _SUPREQHDR {
     /** Cookie. */
     uint32_t        u32Cookie;
     /** Session cookie. */
@@ -21,8 +18,7 @@ typedef struct _SUPREQHDR
 } SUPREQHDR;
 
 /** SUP_IOCTL_COOKIE. */
-typedef struct _SUPCOOKIE
-{
+typedef struct _SUPCOOKIE {
     /** The header.
      * u32Cookie must be set to SUPCOOKIE_INITIAL_COOKIE.
      * u32SessionCookie should be set to some random value. */
@@ -56,8 +52,7 @@ typedef struct _SUPCOOKIE
     } u;
 } SUPCOOKIE, *PSUPCOOKIE;
 
-typedef struct _SUPLDROPEN
-{
+typedef struct _SUPLDROPEN {
     /** The header. */
     SUPREQHDR               Hdr;
     union
@@ -76,21 +71,19 @@ typedef struct _SUPLDROPEN
             /** The base address of the image. */
             RTR0PTR         pvImageBase;
             /** Indicate whether or not the image requires loading. */
-            BOOLEAN            fNeedsLoading;
+            BOOLEAN         fNeedsLoading;
         } Out;
     } u;
 } SUPLDROPEN, *PSUPLDROPEN;
 
-typedef enum _SUPLDRLOADEP
-{
+typedef enum _SUPLDRLOADEP {
     SUPLDRLOADEP_NOTHING = 0,
     SUPLDRLOADEP_VMMR0,
     SUPLDRLOADEP_SERVICE,
     SUPLDRLOADEP_32BIT_HACK = 0x7fffffff
 } SUPLDRLOADEP;
 
-typedef struct _SUPSETVMFORFAST
-{
+typedef struct _SUPSETVMFORFAST {
     /** The header. */
     SUPREQHDR               Hdr;
     union
@@ -209,3 +202,25 @@ typedef struct _SUPLDRLOAD
 #define SUP_IOCTL_LDR_LOAD_SIZE(cbImage)                RT_UOFFSETOF(SUPLDRLOAD, u.In.achImage[cbImage])
 #define SUP_IOCTL_LDR_LOAD_SIZE_IN(cbImage)             RT_UOFFSETOF(SUPLDRLOAD, u.In.achImage[cbImage])
 #define SUP_IOCTL_LDR_LOAD_SIZE_OUT                     sizeof(SUPREQHDR)
+
+ /** @name SUP_IOCTL_LDR_FREE
+ * Free an image.
+ * @{
+ */
+#define SUP_IOCTL_LDR_FREE                              SUP_CTL_CODE_SIZE(7, SUP_IOCTL_LDR_FREE_SIZE)
+#define SUP_IOCTL_LDR_FREE_SIZE                         sizeof(SUPLDRFREE)
+#define SUP_IOCTL_LDR_FREE_SIZE_IN                      sizeof(SUPLDRFREE)
+#define SUP_IOCTL_LDR_FREE_SIZE_OUT                     sizeof(SUPREQHDR)
+
+typedef struct _SUPLDRFREE {
+    /** The header. */
+    SUPREQHDR               Hdr;
+    union
+    {
+        struct
+        {
+            /** Address. */
+            RTR0PTR         pvImageBase;
+        } In;
+    } u;
+} SUPLDRFREE, *PSUPLDRFREE;
