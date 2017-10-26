@@ -4,9 +4,9 @@
 *
 *  TITLE:       MAIN.C
 *
-*  VERSION:     1.20
+*  VERSION:     1.21
 *
-*  DATE:        18 Apr 2017
+*  DATE:        20 Oct 2017
 *
 *  Codename: Aoba
 *
@@ -44,7 +44,7 @@ RTL_OSVERSIONINFOW g_osv;
 #define NTOSKRNL_EXE    "ntoskrnl.exe"
 #define CI_DLL          "ci.dll"
 
-#define T_PROGRAMTITLE   TEXT("DSEFix v1.2.0 (18 Apr 2017)")
+#define T_PROGRAMTITLE   TEXT("DSEFix v1.2.1 (20 Oct 2017)")
 #define T_PROGRAMUNSUP   TEXT("Unsupported WinNT version\r\n")
 #define T_PROGRAMRUN     TEXT("Another instance running, close it before\r\n")
 #define T_PROGRAMUSAGE   TEXT("Usage: dsefix [-e]\r\n")
@@ -533,7 +533,7 @@ LONG QueryCiOptions(
 )
 {
     PBYTE        CiInitialize = NULL;
-    ULONG        c;
+    ULONG        c, j = 0;
     LONG         rel = 0;
     hde64s hs;
 
@@ -541,20 +541,47 @@ LONG QueryCiOptions(
     if (CiInitialize == NULL)
         return 0;
 
-    c = 0;
-    do {
+    if (g_osv.dwBuildNumber > 16199) {
 
-        /* jmp CipInitialize */
-        if (CiInitialize[c] == 0xE9) {
-            rel = *(PLONG)(CiInitialize + c + 1);
-            break;
-        }
-        hde64_disasm(CiInitialize + c, &hs);
-        if (hs.flags & F_ERROR)
-            break;
-        c += hs.len;
+        c = 0;
+        j = 0;
+        do {
 
-    } while (c < 256);
+            /* call CipInitialize */
+            if (CiInitialize[c] == 0xE8)
+                j++;
+
+            if (j > 1) {
+                rel = *(PLONG)(CiInitialize + c + 1);
+                break;
+            }
+
+            hde64_disasm(CiInitialize + c, &hs);
+            if (hs.flags & F_ERROR)
+                break;
+            c += hs.len;
+
+        } while (c < 256);
+
+    }
+    else {
+
+        c = 0;
+        do {
+
+            /* jmp CipInitialize */
+            if (CiInitialize[c] == 0xE9) {
+                rel = *(PLONG)(CiInitialize + c + 1);
+                break;
+            }
+            hde64_disasm(CiInitialize + c, &hs);
+            if (hs.flags & F_ERROR)
+                break;
+            c += hs.len;
+
+        } while (c < 256);
+
+    }
 
     CiInitialize = CiInitialize + c + 5 + rel;
     c = 0;
