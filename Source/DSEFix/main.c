@@ -4,9 +4,9 @@
 *
 *  TITLE:       MAIN.C
 *
-*  VERSION:     1.21
+*  VERSION:     1.22
 *
-*  DATE:        20 Oct 2017
+*  DATE:        01 Dec 2017
 *
 *  Codename: Aoba
 *
@@ -44,11 +44,11 @@ RTL_OSVERSIONINFOW g_osv;
 #define NTOSKRNL_EXE    "ntoskrnl.exe"
 #define CI_DLL          "ci.dll"
 
-#define T_PROGRAMTITLE   TEXT("DSEFix v1.2.1 (20 Oct 2017)")
+#define T_PROGRAMTITLE   TEXT("DSEFix v1.2.2 (01 Dec 2017)")
 #define T_PROGRAMUNSUP   TEXT("Unsupported WinNT version\r\n")
 #define T_PROGRAMRUN     TEXT("Another instance running, close it before\r\n")
 #define T_PROGRAMUSAGE   TEXT("Usage: dsefix [-e]\r\n")
-#define T_PROGRAMINTRO   TEXT("DSEFix v1.2.0 started\r\n(c) 2014 - 2017 DSEFix Project\r\nSupported x64 OS : 7 and above\r\n")
+#define T_PROGRAMINTRO   TEXT("DSEFix v1.2.2 started\r\n(c) 2014 - 2017 DSEFix Project\r\nSupported x64 OS : 7 and above\r\n")
 
 /*
 **  Disable DSE (Vista and above)
